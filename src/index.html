@@ -33,13 +33,33 @@
 				font-family: "VT323", monospace;
 				font-size: 25px;
 			}
+			#panel {
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+  grid-template-rows: repeat(20, 30px);
+  gap: 2px;
+  background-color: #333;
+}
+
+#panel div {
+  width: 30px;
+  height: 30px;
+}
+
+.filled {
+  background-color: #00f;
+}
+
+.empty {
+  background-color: #000;
+}
+
 		</style>
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body class="text-light">
     <header></header>
     <main>
-      
     </main>
     <footer></footer>
     <script type="module" src="/main.js"></script>

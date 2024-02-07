@@ -1,49 +1,126 @@
-
+import { panel } from "../componentes/panel";
 export const juego = {
     template: //html
     `
-    <div class="container">
-        <h1>Ejercicio 1: Modificación de Nick</h1>
-        <input type="text" id="inputNick" class="form-control" placeholder="Introduce tu nick">
-        <button class="btn btn-primary mt-2" id="botonNick">Modificar Nick</button>
-        <div id="resultNick" class="mt-3 bg-warning" style="color: black;"></div>
-        
-        <h1 class="mt-4">Ejercicio 2: Modificación de Fecha</h1>
-        <input type="text" id="inputFecha" class="form-control" placeholder="Introduce la fecha (yy/mm/ddThh:mm:ss)">
-        <button class="btn btn-primary mt-2" id="botonFecha">Modificar Fecha</button>
-        <div id="resultFecha" class="mt-3 bg-warning" style="color: black;"></div>
-
-        <h1 class="mt-4">Ejercicio 2: Modificación de Fecha 2</h1>
-        <input type="text" id="inputFecha2" class="form-control" placeholder="Introduce la fecha (yy/mm/ddThh:mm:ss)">
-        <button class="btn btn-primary mt-2" id="botonFecha2">Modificar Fecha</button>
-        <div id="resultFecha2" class="mt-3 bg-warning" style="color: black;"></div>
-        
-        <h1 class="mt-4">Ejercicio 3: Días transcurridos</h1>
-        <input type="text" id="inputFechaDias" class="form-control" placeholder="Introduce la fecha (yy/mm/ddThh:mm:ss)">
-        <button class="btn btn-primary mt-2" id="botonFechaDias">Calcular Días</button>
-        <div id="resultFechaDias" class="mt-3 bg-warning" style="color: black;"></div>
+    <!-- Pantalla del juego -->
+  <div id="juego">
+  <div class="row">
+    <!-- Panel izquierda -->
+    <div
+      class="col-4 d-flex flex-column justify-content-end align-items-center p-5"
+    >
+      <h4>Nivel: <span>2</span></h4>
+      <h4>Tiempo: <span>5:22</span></h4>
+      <h4>Lineas: <span>2</span></h4>
+      <h4>Puntos: <span>211122</span></h4>
     </div>
+    <!-- Panel central -->
+    <div class="col-4 d-flex justify-content-center">
+      <div id="panel" class="p-5">
+       
+      </div>
+    </div>
+              <!-- Panel derecha -->
+              <div
+              class="col-4 d-flex flex-column justify-content-start align-items-center p-5"
+            >
+              <div id="piezaSiguiente">
+                <h4>Pieza siguiente:</h4>
+                <div class="piezaSiguiente m-2">
+                  <div class="fila d-flex justify-content-center">
+                    <div class="celda bg-primary bg-gradient border-dark">x</div>
+                    <div class="celda bg-dark border-secondary">x</div>
+                  </div>
+                  <div class="fila d-flex justify-content-center">
+                    <div class="celda bg-primary bg-gradient border-dark">x</div>
+                    <div class="celda bg-dark border-secondary">x</div>
+                  </div>
+                  <div class="fila d-flex justify-content-center">
+                    <div class="celda bg-primary bg-gradient border-dark">x</div>
+                    <div class="celda bg-primary bg-gradient border-dark">x</div>
+                  </div>
+                </div>
+<div class="piezaSiguiente m-2">
+                  <div class="fila d-flex justify-content-center">
+                    <div class="celda bg-primary bg-gradient border-dark">x</div>
+                    <div class="celda bg-dark border-secondary">x</div>
+                  </div>
+                  <div class="fila d-flex justify-content-center">
+                    <div class="celda bg-primary bg-gradient border-dark">x</div>
+                    <div class="celda bg-dark border-secondary">x</div>
+                  </div>
+                  <div class="fila d-flex justify-content-center">
+                    <div class="celda bg-primary bg-gradient border-dark">x</div>
+                    <div class="celda bg-primary bg-gradient border-dark">x</div>
+                  </div>
+                </div>
+                <div class="piezaSiguiente m-2">
+                  <div class="fila d-flex justify-content-center">
+                    <div class="celda bg-primary bg-gradient border-dark">x</div>
+                    <div class="celda bg-dark border-secondary">x</div>
+                  </div>
+                  <div class="fila d-flex justify-content-center">
+                    <div class="celda bg-primary bg-gradient border-dark">x</div>
+                    <div class="celda bg-dark border-secondary">x</div>
+                  </div>
+                  <div class="fila d-flex justify-content-center">
+                    <div class="celda bg-primary bg-gradient border-dark">x</div>
+                    <div class="celda bg-primary bg-gradient border-dark">x</div>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div id="piezaGuardada">
+              <button class="" id="insertarPieza">Insertar pieza</button>
+                <h4>Pieza guardada:</h4>
+                <div class="piezaGuardada">
+                  <div class="piezaSiguiente m-2">
+                    <div class="fila d-flex justify-content-center">
+                      <div class="celda bg-warning bg-gradient border-dark">x</div>
+                      <div class="celda bg-warning border-secondary">x</div>
+                    </div>
+                    <div class="fila d-flex justify-content-center">
+                      <div class="celda bg-warning bg-gradient border-dark">x</div>
+                      <div class="celda bg-warning border-secondary">x</div>
+                      
+                    </div>
+                   
+                    <button class="mt-5" id="borrarPieza">Borrar pieza</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
     `,
     script:()=>{
-     
+      panel.pintaPanel()
+
+      document.querySelector('#insertarPieza').addEventListener('click', () => {
+        panel.crearNuevaPieza();
+        panel.insertarPieza();
+    });
+    document.querySelector('#borrarPieza').addEventListener('click', () => {
+      panel.borrarPieza();
+      panel.insertarPieza();
+  });
         const botonNick = document.querySelector("#botonNick");
-botonNick.addEventListener("click", modificaNick);
+        botonNick.addEventListener("click", modificaNick);
 
-function modificaNick() {
-    const inputNick = document.querySelector("#inputNick");
-    const resultNick = document.querySelector("#resultNick");
-  
-    //trim elimina espacios en blanco
-    const nick = inputNick.value.trim();
+        function modificaNick() {
+        const inputNick = document.querySelector("#inputNick");
+        const resultNick = document.querySelector("#resultNick");
+      
+        //trim elimina espacios en blanco
+        const nick = inputNick.value.trim();
 
   
-    // Si esta vacio sale el mensaje
-    if (!nick) {
-        alert('El nick no puede estar en blanco');
-        resultNick.innerHTML = "";
-    } else {
-        return null
-    }
+        // Si esta vacio sale el mensaje
+        if (!nick) {
+            alert('El nick no puede estar en blanco');
+            resultNick.innerHTML = "";
+        } else {
+            return null
+        }
   }
 
 
@@ -183,7 +260,6 @@ function dias() {
   
   // cojer los datos y sacar por consola
   const datosGuardados = ls.getDades();
-  console.log(datosGuardados);
   
 
 //ejercicio 5
@@ -209,11 +285,6 @@ function registraPartida(partida) {
   
   // Llamar a la función para registrar la partida
   registraPartida(nuevaPartida);
-  
-  // Comprobar que el localstorage se ha actualizado correctamente
-  console.log(ls.getDades());
-  
-
     }
 
     

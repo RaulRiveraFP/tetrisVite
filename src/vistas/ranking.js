@@ -1,5 +1,6 @@
 import { buscador } from "../funciones/buscador";
 import { juegos } from "../funciones/bdRanking";
+import { panel } from "../componentes/panel"
 
 export const ranking = {
     template: `
@@ -12,11 +13,10 @@ export const ranking = {
                 <div id="ranking" class="m-5 p-5 bg-dark"></div>
                 <div id="partidas" class="m-5 p-5 bg-dark"></div>
             </div>
+            <div id="panel"></div>
         </main>
     `,
     script: () => {
-        // Array de juegos
-
         // Definición de las iconos para el orden ascendente y descendente
         const arrowUpIcon = '<i class="bi bi-arrow-up-square"></i>';
         const arrowDownIcon = '<i class="bi bi-arrow-down-square"></i>';
@@ -103,7 +103,6 @@ export const ranking = {
                         const dateA = new Date(a.fecha);
                         const dateB = new Date(b.fecha);
                 
-                        console.log('dateA:', dateA, 'dateB:', dateB);
                 
                         // Compare the dates directly
                         if (dateA < dateB) return -order;
@@ -126,17 +125,11 @@ export const ranking = {
         };
 
         function insertaNuevaPartida(datosPartida) {
-            console.log("Guardando partida");
             juegos.push(datosPartida);
-            console.log(juegos);
         }
 
         function pintaDatos(partida) {
-            console.log('Datos de la partida:');
-            console.log('Avatar:', partida.avatar);
-            console.log('Nick:', partida.nick);
-            console.log('Puntos:', partida.puntos);
-            console.log('Fecha:', partida.fecha);
+           
 
             const mensajeConfirm = `¿Deseas guardar la partida?
                 Nick: ${partida.nick}
@@ -147,22 +140,16 @@ export const ranking = {
             if (guardarPartida) {
                 insertaNuevaPartida(partida);
                 pintaTabla();
-                console.log('Partida guardada.');
             }
 
             const inputBuscador = document.querySelector('#buscador');
             inputBuscador.addEventListener('input', function () {
                 const textoBusqueda = inputBuscador.value;
                 const resultados = buscador(textoBusqueda);
-                console.log(resultados);
             });
         }
-
-
-        console.log(orden);
-console.log(pintaTabla);
-pintaTabla();
-pintaDatos(datosEjemploPartida);
+// pintaTabla();
+// pintaDatos(datosEjemploPartida);
 
     }
 };
