@@ -2,59 +2,88 @@ import { ModeloPieza } from "../componentes/clase";
 import { model } from "./models";
 export const panel = {
     matriz: [
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ],
     pintaPanel: function () {
         const panelDiv = document.getElementById("panel");
-
+    
         // Limpiamos el contenido actual del div
         panelDiv.innerHTML = '';
-
+    
         // Recorremos la matriz y creamos divs según los valores
         for (let i = 0; i < this.matriz.length; i++) {
             for (let j = 0; j < this.matriz[i].length; j++) {
                 const cellDiv = document.createElement("div");
+                cellDiv.id = `cell-${i}-${j}`;
                 cellDiv.className = this.matriz[i][j] === 1 ? "filled" : "empty";
                 panelDiv.appendChild(cellDiv);
             }
         }
     },
+    
     crearNuevaPieza: function () {
         let modeloAleatorio = Math.floor(Math.random() * 8);
-        let xAleatoria = Math.floor((Math.random() * 10) - model[modeloAleatorio].matriz[0].length);
+        let xAleatoria = Math.min(Math.floor(Math.random() * (8 - model[modeloAleatorio].matriz[0].length)), 8) + 1;
+        console.log((xAleatoria));
         panel.nuevaPieza = new ModeloPieza(modeloAleatorio, xAleatoria, 1, 0);
+    },
+    borrarPieza: function () {
+        for (let i = 0; i < panel.nuevaPieza.altura; i++) {
+            for (let x = 0; x < panel.nuevaPieza.longitud; x++) {
+                const elemento = panel.nuevaPieza.matriz[i][x];
+                if (elemento) {
+                    panel.matriz[i + panel.nuevaPieza.y][x + panel.nuevaPieza.x] = 0;
+                }
+            }
+        }
     },
     insertarPieza: () => {
         for(let i=0; i<panel.nuevaPieza.altura; i++){
           for(let x=0; x<panel.nuevaPieza.longitud; x++){
             const elemento = panel.nuevaPieza.matriz[i][x];
             if(elemento){
-              panel.matriz[i + panel.nuevaPieza.y][x + panel.nuevaPieza.x] = elemento;
+              const cellId = `cell-${i + panel.nuevaPieza.y}-${x + panel.nuevaPieza.x}`;
+              const cellDiv = document.getElementById(cellId);
+              if (cellDiv) {
+                panel.matriz[i + panel.nuevaPieza.y][x + panel.nuevaPieza.x] = elemento;
+                cellDiv.className = "filled";
+              }
             }
           }
         }  
-        panel.pintaPanel();
+        panel.pintaPanel();  // Asegúrate de que estás volviendo a pintar después de insertar la pieza.
+    },    
+    iniciarMovimiento: function () {
+        panel.movimientoInterval = setInterval(function () {
+            if (panel.nuevaPieza && panel.nuevaPieza.y + panel.nuevaPieza.altura < panel.matriz.length - 1) {
+                panel.borrarPieza();
+                panel.nuevaPieza.y += 1;
+                panel.insertarPieza();
+                panel.pintaPanel();
+            }
+        }, 1000);
     },
+    
     controlTeclas: function () {
             document.addEventListener("keydown", (event) => {
               switch (event.key) {
@@ -80,6 +109,7 @@ export const panel = {
             });
     },
     borrarPieza: function () {
+
         for (let i = 0; i < panel.nuevaPieza.altura; i++) {
             for (let x = 0; x < panel.nuevaPieza.longitud; x++) {
                 const elemento = panel.nuevaPieza.matriz[i][x];
@@ -97,7 +127,7 @@ export const panel = {
             if (panel.nuevaPieza.x + panel.nuevaPieza.longitud < panel.matriz[0].length - 1) {
                 panel.nuevaPieza.x += 1;
             }
-    
+            panel.borrarPieza();
             panel.insertarPieza();
             panel.pintaPanel();
         }
@@ -111,13 +141,15 @@ export const panel = {
             if (panel.nuevaPieza.x > 1) {
                 panel.nuevaPieza.x -= 1;
             }
-    
+            panel.borrarPieza();
+
             panel.insertarPieza();
             panel.pintaPanel();
         }
     },
     
-    bajar: () => {
+    bajar: (e) => {
+        e.preventDefault()
         if (panel.nuevaPieza) {
             panel.borrarPieza();
     
@@ -125,7 +157,8 @@ export const panel = {
             if (panel.nuevaPieza.y + panel.nuevaPieza.altura < panel.matriz.length - 1) {
                 panel.nuevaPieza.y += 1;
             }
-    
+            panel.borrarPieza();
+
             panel.insertarPieza();
             panel.pintaPanel();
         }
